@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express, { Response } from 'express';
+import logger from './logger';
 
 dotenv.config();
 const app = express();
@@ -13,8 +14,12 @@ app.get('/', (_, res: Response) => {
   res.send('Initial Commit');
 });
 
-const start = () => {
-  app.listen(port, () => `Server is listening on port ${port}`);
+const start = async () => {
+  try {
+    app.listen(port, () => logger.info(`Server is listening on port ${port}`));
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
 start();
