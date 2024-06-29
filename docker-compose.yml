@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  postgres:
+    image: 'postgres'
+    restart: unless-stopped
+    ports:
+      - ${DB_PORT}:5432
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+    volumes:
+      - ./data:/data/db
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    expose:
+      - ${PORT}
+    ports:
+      - 8000:8000
+    volumes:
+      - ./src:/app/src
+      - ./nodemon.json:/app/nodemon.json
