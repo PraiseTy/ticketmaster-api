@@ -1,15 +1,12 @@
 version: '3.7'
 services:
   postgres:
-    image: 'postgres'
+    image: 'postgres:13'
     restart: unless-stopped
     ports:
-      - ${DB_PORT}:5432
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     env_file:
       - .env
-    environment:
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
     volumes:
       - ./data:/data/db
   server:
@@ -23,7 +20,9 @@ services:
     expose:
       - ${PORT}
     ports:
-      - 8000:8000
+      - ${PORT}:${PORT}
     volumes:
-      - ./src:/app/src
-      - ./nodemon.json:/app/nodemon.json
+      - ./src:/usr/app/src
+      - ./nodemon.json:/usr/app/nodemon.json
+      - /usr/app/node_modules
+    command: npm run dev

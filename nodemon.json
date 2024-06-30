@@ -3,5 +3,6 @@
   "watch": ["src/**/*.ts", "src/**/*.yaml"],
   "execMap": {
     "ts": "node --inspect=0.0.0.0:9229 --nolazy -r ts-node/register"
-  }
+  },
+  "legacyWatch": true
 }

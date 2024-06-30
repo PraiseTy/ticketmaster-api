@@ -1,5 +1,8 @@
 import winston from 'winston';
+import dotenv from 'dotenv';
 import path from 'node:path';
+
+dotenv.config();
 
 const logDirectory = path.join((process.cwd(), 'logs'));
 
@@ -12,11 +15,11 @@ const colors = {
 
 winston.addColors(colors);
 
-const logFomat = winston.format.printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`);
+const logFormat = winston.format.printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`);
 
 const logger = winston.createLogger({
-  level: 'debug',
-  format: winston.format.combine(winston.format.timestamp(), winston.format.colorize({ all: true }), logFomat),
+  level: process.env.LOG_LEVEL,
+  format: winston.format.combine(winston.format.timestamp(), winston.format.colorize({ all: true }), logFormat),
 
   transports: [
     new winston.transports.Console(),
