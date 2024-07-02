@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  postgres:
+    image: 'postgres:13'
+    restart: unless-stopped
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data/db
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    expose:
+      - ${PORT}
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./src:/usr/app/src
+      - ./nodemon.json:/usr/app/nodemon.json
+      - /usr/app/node_modules
+    command: npm run dev
