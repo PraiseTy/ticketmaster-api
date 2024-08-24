@@ -3,7 +3,7 @@ import express, { Response } from 'express';
 import logger from './logger';
 
 dotenv.config();
-const app = express();
+export const app = express();
 
 const port = process.env.PORT;
 
