@@ -1,10 +1,11 @@
 import { CONTAINER_NAME, isContainerRunning, setupPostgresContainer } from './docker';
 
 export const testDBconfig = {
-  user: 'test',
-  password: 'test',
+  user: 'postgres',
+  password: 'password',
   port: '5432',
-  database: 'testPostgresDB'
+  database: 'ticketmaster-api',
+  host: 'localhost'
 };
 
 const jestSetup = async () => {

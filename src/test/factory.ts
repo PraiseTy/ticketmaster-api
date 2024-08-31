@@ -2,10 +2,16 @@ import { Server, createServer } from 'node:http';
 import express, { Response } from 'express';
 import supertest from 'supertest';
 import logger from '../logger';
+import routes from '../routes/artist';
+import { DataSource } from 'typeorm';
+import { testDBconfig } from './setup/jest-setup';
+import { Artist } from '../entity/artist';
+import { TestDataSource } from '../test-data-source';
 
 export class TestFactory {
   private _app: express.Application;
   private _server: Server;
+  private _dataSource: DataSource;
 
   public get app(): supertest.SuperTest<supertest.Test> {
     return supertest(this._app) as unknown as supertest.SuperTest<supertest.Test>;
@@ -16,17 +22,22 @@ export class TestFactory {
   }
 
   public async close(): Promise<void> {
+    if (this._dataSource.isInitialized) {
+      await this._dataSource.destroy();
+    }
     this._server.close();
   }
 
   private async startup() {
     try {
+      this._dataSource = TestDataSource;
+      await this._dataSource.initialize();
       // Setup Express app
       this._app = express();
       this._app.use(express.json());
       this._app.use(express.urlencoded({ extended: true }));
       // Add routes and middleware here
-      // this._app.use('/', routes);
+      this._app.use('/', routes);
       // this._app.use(errorHandler);
       this._app.get('/', (_, res: Response) => {
         res.send('Initial Commit');

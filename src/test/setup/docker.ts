@@ -38,7 +38,7 @@ export const setupPostgresContainer = async (user: string, password: string, por
   await removePostgresContainer();
 
   const container = await docker.createContainer({
-    Env: [`POSTGRES_USER=${user}`, `POSTGRES_PASSWORD=${password}`],
+    Env: [`POSTGRES_USER=${user}`, `POSTGRES_PASSWORD=${password}`, 'NODE_ENV=test'],
     Image: CONTAINER_IMAGE,
     name: CONTAINER_NAME,
     HostConfig: {

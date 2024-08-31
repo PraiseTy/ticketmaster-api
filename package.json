@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "dev": "nodemon src/app.ts",
     "tsc": "tsc",
     "lint": "eslint . --ext .ts,.js && tsc --noEmit",
@@ -19,6 +19,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
     "dockerode": "^4.0.2",
     "dockerode-utils": "^0.0.7",
     "dotenv": "^16.4.5",

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
+import { Artist } from './entity/artist';
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: process.env.POSTGRES_NAME,
   synchronize: true,
   logging: false,
-  entities: [],
+  entities: ['src/entity/**/*.ts'],
   migrations: [],
   subscribers: []
 });
