@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import { Artist } from '../entity/artist';
-import { DataSource } from 'typeorm';
-import { AppDataSource } from '../data-source';
 import { HTTP_ERRORS } from '../utils/constants';
+import { handleGetRepository } from '../utils/handle-get-repository';
 
 export const createArtist = async (req: Request, res: Response) => {
   const artist = req.body;
-  const ArtistRepo = AppDataSource.getRepository(Artist);
+  const ArtistRepo = handleGetRepository(Artist);
   const newArtist = ArtistRepo.create(artist);
   const saveArtist = await ArtistRepo.save(newArtist);
 

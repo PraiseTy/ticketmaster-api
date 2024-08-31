@@ -1,5 +1,5 @@
-import { testDBconfig } from './test/setup/jest-setup';
 import { DataSource } from 'typeorm';
+import { testDBconfig } from './test/setup/jest-setup';
 
 export const TestDataSource = new DataSource({
   type: 'postgres',
